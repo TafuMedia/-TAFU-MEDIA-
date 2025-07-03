@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>⊕TAFU MEDIA</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+  <style>
+    body {
+      background-color: #000;
+      color: white;
+      font-family: 'Helvetica Neue', sans-serif;
+    }
+    .movie-card:hover {
+      transform: scale(1.05);
+      transition: 0.3s ease;
+    }
+  </style>
+</head>
+<body class="min-h-screen">
+  <header class="flex justify-between items-center p-4 bg-black border-b border-gray-800 sticky top-0 z-50">
+    <h1 class="text-3xl font-bold text-white">⊕<span class="text-red-600">TAFU</span> MEDIA</h1>
+    <input type="text" id="searchBox" placeholder="Search..." class="bg-gray-900 text-white px-3 py-1 rounded" />
+    <a href="https://t.me/Sowrov21n" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">Request Movie</a>
+  </header>
+
+  <section class="p-6">
+    <h2 class="text-xl mb-4">Featured Movies</h2>
+    <div id="movieGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"></div>
+  </section>
+
+  <footer class="text-center text-gray-500 p-4 border-t border-gray-800">
+    shotto kore Yashwin Khan
+  </footer>
+
+  <script src="movies.js"></script>
+  <script>
+    const movieGrid = document.getElementById('movieGrid');
+
+    movies.forEach(movie => {
+      const card = document.createElement('div');
+      card.className = 'movie-card bg-gray-900 rounded overflow-hidden shadow-lg';
+      card.innerHTML = `
+        <a href="movie.html?videoId=${movie.videoId}&title=${encodeURIComponent(movie.title)}&desc=${encodeURIComponent(movie.description)}">
+          <img src="${movie.poster}" alt="${movie.title}" class="w-full h-56 object-cover">
+          <div class="p-3">
+            <h3 class="text-lg font-semibold">${movie.title}</h3>
+            <p class="text-gray-400 text-sm">${movie.category}</p>
+          </div>
+        </a>`;
+      movieGrid.appendChild(card);
+    });
+
+    document.getElementById('searchBox').addEventListener('input', function () {
+      const query = this.value.toLowerCase();
+      const cards = movieGrid.querySelectorAll('.movie-card');
+      cards.forEach(card => {
+        const title = card.innerText.toLowerCase();
+        card.style.display = title.includes(query) ? '' : 'none';
+      });
+    });
+  </script>
+</body>
+</html>
