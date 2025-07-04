@@ -8,11 +8,11 @@ const movies = [
     sourceType: "youtube"
   },
   {
-    title: "Farzi",
-    category: "Thriller / Web Series",
-    description: "A small-time artist gets pulled into the dark world of counterfeiting.",
-    poster: "https://i.ibb.co/Q3Kmctxm",
-    videoId: "https://hdmovie2.st/25515-farzi-2023-hindi.html",
-    sourceType: "external"
-  }
+  title: "Farzi",
+  category: "Web Series",
+  description: "A small-time artist gets pulled into the dark world of counterfeiting.",
+  poster: "https://i.ibb.co/Q3Kmctx/farzi-banner.jpg",
+  videoId: "https://hdmovie2.st/25515-farzi-2023-hindi.html",
+  sourceType: "external"
+}
 ];
