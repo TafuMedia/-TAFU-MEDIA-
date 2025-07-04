@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>⊕TAFU MEDIA</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <style>
+    body {
+      background-color: #000;
+      color: white;
+      font-family: 'Helvetica Neue', sans-serif;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background-color: #000;
+      border-bottom: 1px solid #222;
+    }
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .logo span {
+      font-size: 2rem;
+      color: white;
+    }
+    .request-btn {
+      background-color: #e50914;
+      padding: 0.4rem 1rem;
+      border-radius: 5px;
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+    }
+    .slider {
+      margin-top: 2rem;
+      padding: 0 2rem;
+    }
+    .slider h2 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    .movie-row {
+      display: flex;
+      gap: 1rem;
+      overflow-x: auto;
+    }
+    .movie-card {
+      min-width: 180px;
+      cursor: pointer;
+      border-radius: 8px;
+      overflow: hidden;
+      transition: transform 0.3s;
+    }
+    .movie-card:hover {
+      transform: scale(1.05);
+    }
+    .movie-card img {
+      width: 100%;
+      height: 270px;
+      object-fit: cover;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo"><span>⊕</span>TAFU MEDIA</div>
+    <a href="https://t.me/Sowrov21n" target="_blank" class="request-btn">Request Movie</a>
+  </header>
+
+  <section class="slider">
+    <h2>Romantic Drama</h2>
+    <div class="movie-row" id="romanticRow"></div>
+  </section>
+
+  <script src="movies.js"></script>
+  <script>
+    const romanticRow = document.getElementById('romanticRow');
+    movies.forEach(movie => {
+      const card = document.createElement('a');
+      card.href = `movie.html?videoId=${movie.videoId}&title=${encodeURIComponent(movie.title)}&desc=${encodeURIComponent(movie.description)}&sourceType=${movie.sourceType}`;
+      card.className = 'movie-card';
+      card.innerHTML = `<img src="${movie.poster}" alt="${movie.title}" />`;
+      romanticRow.appendChild(card);
+    });
+  </script>
+</body>
+</html>

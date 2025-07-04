@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>⊕TAFU MEDIA Player</title>
+  <link href="https://cdn.jsdelivr.net/npm/plyr@3.7.8/dist/plyr.css" rel="stylesheet" />
+  <style>
+    body {
+      background-color: #000;
+      color: #fff;
+      font-family: 'Helvetica Neue', sans-serif;
+      padding: 2rem;
+    }
+    h1 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+    p {
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+    #playerContainer iframe,
+    #playerContainer video {
+      width: 100%;
+      max-width: 900px;
+      aspect-ratio: 16/9;
+      border-radius: 12px;
+      box-shadow: 0 0 30px #222;
+    }
+  </style>
+</head>
+<body>
+  <h1 id="movieTitle"></h1>
+  <p id="movieDesc"></p>
+  <div id="playerContainer"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/plyr@3.7.8/dist/plyr.polyfilled.js"></script>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const title = decodeURIComponent(params.get("title"));
+    const desc = decodeURIComponent(params.get("desc"));
+    const videoId = params.get("videoId");
+    const sourceType = params.get("sourceType");
+
+    document.getElementById("movieTitle").textContent = "⊕TAFU MEDIA | " + title;
+    document.getElementById("movieDesc").textContent = desc;
+
+    const playerContainer = document.getElementById("playerContainer");
+    if (sourceType === "youtube") {
+      playerContainer.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen allow="autoplay; encrypted-media"></iframe>`;
+    } else {
+      playerContainer.innerHTML = `
+        <video id="player" controls crossorigin playsinline>
+          <source src="https://drive.google.com/uc?export=download&id=${videoId}" type="video/mp4" />
+        </video>`;
+      const player = new Plyr('#player');
+    }
+  </script>
+</body>
+</html>
