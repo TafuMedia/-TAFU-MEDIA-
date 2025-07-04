@@ -2,9 +2,17 @@ const movies = [
   {
     title: "96",
     category: "Romantic Drama",
-    description: "A touching love story of two high school sweethearts meeting after years.",
-    poster: "https://i.ibb.co/Y7KbsBvh/96-movie-poster.jpg",
-    videoId: "63F9Pv4k4wk",
-    sourceType: "youtube"
+    description: "...",
+    poster: "URL",
+    videoId: "Drive ID or YouTube ID or External link",
+    sourceType: "drive" // or "youtube" or "external"
+  },
+  {
+    title: "Farzi",
+    category: "Web Series",
+    description: "...",
+    poster: "https://i.ibb.co/Q3Kmctxm",
+    videoId: "https://hdmovie2.st/25515-farzi-2023-hindi.html",
+    sourceType: "external"
   }
 ];
