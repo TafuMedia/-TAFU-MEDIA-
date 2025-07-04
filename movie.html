@@ -1,51 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Movie | ⊕TAFU MEDIA</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
-  <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Movie Player</title>
+  <link href="https://cdn.jsdelivr.net/npm/plyr@3.7.8/dist/plyr.css" rel="stylesheet" />
   <style>
     body {
-      background-color: #000;
-      color: white;
+      background: #000;
+      color: #fff;
       font-family: 'Helvetica Neue', sans-serif;
+      margin: 0; padding: 1rem;
+    }
+    h1 {
+      font-weight: 700;
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+    }
+    p {
+      margin-bottom: 1rem;
+    }
+    #playerContainer iframe,
+    #playerContainer video {
+      width: 100%;
+      max-width: 900px;
+      border-radius: 12px;
+      box-shadow: 0 0 30px #222;
     }
   </style>
 </head>
 <body>
-  <header class="flex justify-between items-center p-4 bg-black border-b border-gray-800">
-    <h1 class="text-3xl font-bold text-white">⊕<span class="text-red-600">TAFU</span> MEDIA</h1>
-    <a href="index.html" class="text-white underline">Home</a>
-  </header>
+  <h1 id="movieTitle"></h1>
+  <p id="movieDesc"></p>
+  <div id="playerContainer"></div>
 
-  <section class="p-4 max-w-5xl mx-auto">
-    <h2 id="movieTitle" class="text-2xl font-semibold mb-4">Loading...</h2>
-    <div class="aspect-w-16 aspect-h-9">
-      <video id="player" controls crossorigin playsinline class="w-full rounded-xl">
-        <source id="videoSource" src="" type="video/mp4">
-      </video>
-    </div>
-    <p id="movieDesc" class="mt-4 text-gray-400"></p>
-  </section>
-
-  <footer class="text-center text-gray-500 p-4 border-t border-gray-800">
-    shotto kore Yashwin Khan
-  </footer>
-
-  <script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/plyr@3.7.8/dist/plyr.polyfilled.js"></script>
   <script>
     const params = new URLSearchParams(window.location.search);
     const title = decodeURIComponent(params.get("title"));
     const desc = decodeURIComponent(params.get("desc"));
     const videoId = params.get("videoId");
+    const sourceType = params.get("sourceType");
 
     document.getElementById("movieTitle").textContent = title;
     document.getElementById("movieDesc").textContent = desc;
-    document.getElementById("videoSource").src = `https://drive.google.com/uc?export=download&id=${videoId}`;
 
-    const player = new Plyr('#player');
+    const playerContainer = document.getElementById("playerContainer");
+
+    if (sourceType === "youtube") {
+      playerContainer.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen allow="autoplay; encrypted-media" style="aspect-ratio:16/9;"></iframe>`;
+    } else {
+      playerContainer.innerHTML = `
+        <video id="player" controls crossorigin playsinline>
+          <source src="https://drive.google.com/uc?export=download&id=${videoId}" type="video/mp4" />
+        </video>`;
+      const player = new Plyr('#player');
+    }
   </script>
 </body>
 </html>
