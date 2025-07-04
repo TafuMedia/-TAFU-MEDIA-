@@ -2,62 +2,74 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>⊕TAFU MEDIA</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
   <style>
     body {
       background-color: #000;
       color: white;
       font-family: 'Helvetica Neue', sans-serif;
     }
+    .container {
+      max-width: 900px;
+      margin: 2rem auto;
+    }
+    h1 {
+      font-weight: 700;
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    .movie-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(150px,1fr));
+      gap: 1rem;
+    }
+    .movie-card {
+      cursor: pointer;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 15px #222;
+      transition: transform 0.3s ease;
+    }
     .movie-card:hover {
       transform: scale(1.05);
-      transition: 0.3s ease;
+    }
+    .movie-poster {
+      width: 100%;
+      height: 225px;
+      object-fit: cover;
+      border-radius: 10px 10px 0 0;
+    }
+    .movie-title {
+      padding: 0.5rem;
+      font-weight: 600;
+      font-size: 1rem;
+      text-align: center;
+      background: #111;
+      border-radius: 0 0 10px 10px;
     }
   </style>
 </head>
-<body class="min-h-screen">
-  <header class="flex justify-between items-center p-4 bg-black border-b border-gray-800 sticky top-0 z-50">
-    <h1 class="text-3xl font-bold text-white">⊕<span class="text-red-600">TAFU</span> MEDIA</h1>
-    <input type="text" id="searchBox" placeholder="Search..." class="bg-gray-900 text-white px-3 py-1 rounded" />
-    <a href="https://t.me/Sowrov21n" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">Request Movie</a>
-  </header>
-
-  <section class="p-6">
-    <h2 class="text-xl mb-4">Featured Movies</h2>
-    <div id="movieGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"></div>
-  </section>
-
-  <footer class="text-center text-gray-500 p-4 border-t border-gray-800">
-    shotto kore Yashwin Khan
-  </footer>
+<body>
+  <div class="container">
+    <h1>⊕TAFU MEDIA</h1>
+    <div class="movie-grid" id="movieGrid"></div>
+  </div>
 
   <script src="movies.js"></script>
   <script>
     const movieGrid = document.getElementById('movieGrid');
 
     movies.forEach(movie => {
-      const card = document.createElement('div');
-      card.className = 'movie-card bg-gray-900 rounded overflow-hidden shadow-lg';
-      card.innerHTML = `
-        <a href="movie.html?videoId=${movie.videoId}&title=${encodeURIComponent(movie.title)}&desc=${encodeURIComponent(movie.description)}">
-          <img src="${movie.poster}" alt="${movie.title}" class="w-full h-56 object-cover">
-          <div class="p-3">
-            <h3 class="text-lg font-semibold">${movie.title}</h3>
-            <p class="text-gray-400 text-sm">${movie.category}</p>
-          </div>
-        </a>`;
-      movieGrid.appendChild(card);
-    });
-
-    document.getElementById('searchBox').addEventListener('input', function () {
-      const query = this.value.toLowerCase();
-      const cards = movieGrid.querySelectorAll('.movie-card');
-      cards.forEach(card => {
-        const title = card.innerText.toLowerCase();
-        card.style.display = title.includes(query) ? '' : 'none';
-      });
+      const movieCard = document.createElement('a');
+      movieCard.classList.add('movie-card');
+      movieCard.href = `movie.html?videoId=${movie.videoId}&title=${encodeURIComponent(movie.title)}&desc=${encodeURIComponent(movie.description)}&sourceType=${movie.sourceType}`;
+      movieCard.innerHTML = `
+        <img src="${movie.poster}" alt="${movie.title}" class="movie-poster" />
+        <div class="movie-title">${movie.title}</div>
+      `;
+      movieGrid.appendChild(movieCard);
     });
   </script>
 </body>
