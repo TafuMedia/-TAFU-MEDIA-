@@ -18,21 +18,27 @@
       padding: 1rem 2rem;
       background-color: #000;
       border-bottom: 1px solid #222;
+      flex-wrap: wrap;
     }
     .logo {
       font-size: 1.5rem;
       font-weight: bold;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
     }
-    .logo span {
-      font-size: 2rem;
+    .logo .icon {
+      color: red;
+      font-size: 1.8rem;
+    }
+    .logo .text {
       color: white;
+      font-weight: 700;
+      letter-spacing: 1px;
     }
     .request-btn {
       background-color: #e50914;
-      padding: 0.4rem 1rem;
+      padding: 0.5rem 1rem;
       border-radius: 5px;
       text-decoration: none;
       color: white;
@@ -67,29 +73,56 @@
       height: 270px;
       object-fit: cover;
     }
+    .search-box {
+      margin-top: 0.5rem;
+      flex-grow: 1;
+      display: flex;
+      justify-content: center;
+      padding: 0.5rem 2rem;
+    }
+    .search-box input {
+      width: 100%;
+      max-width: 300px;
+      padding: 0.4rem 0.8rem;
+      border-radius: 8px;
+      background-color: #111;
+      color: white;
+      border: 1px solid #333;
+    }
   </style>
 </head>
 <body>
   <header>
-    <div class="logo"><span>⊕</span>TAFU MEDIA</div>
+    <div class="logo"><span class="icon">⊕</span><span class="text">TAFU MEDIA</span></div>
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Search for a movie..." />
+    </div>
     <a href="https://t.me/Sowrov21n" target="_blank" class="request-btn">Request Movie</a>
   </header>
 
   <section class="slider">
-    <h2>Romantic Drama</h2>
-    <div class="movie-row" id="romanticRow"></div>
+    <h2>All Movies</h2>
+    <div class="movie-row" id="movieRow"></div>
   </section>
 
   <script src="movies.js"></script>
   <script>
-    const romanticRow = document.getElementById('romanticRow');
-    movies.forEach(movie => {
-      const card = document.createElement('a');
-      card.href = `movie.html?videoId=${movie.videoId}&title=${encodeURIComponent(movie.title)}&desc=${encodeURIComponent(movie.description)}&sourceType=${movie.sourceType}`;
-      card.className = 'movie-card';
-      card.innerHTML = `<img src="${movie.poster}" alt="${movie.title}" />`;
-      romanticRow.appendChild(card);
-    });
+    const movieRow = document.getElementById('movieRow');
+    const searchInput = document.getElementById('searchInput');
+
+    function renderMovies(filter = "") {
+      movieRow.innerHTML = "";
+      movies.filter(m => m.title.toLowerCase().includes(filter.toLowerCase())).forEach(movie => {
+        const card = document.createElement('a');
+        card.href = `movie.html?videoId=${movie.videoId}&title=${encodeURIComponent(movie.title)}&desc=${encodeURIComponent(movie.description)}&sourceType=${movie.sourceType}`;
+        card.className = 'movie-card';
+        card.innerHTML = `<img src="${movie.poster}" alt="${movie.title}" />`;
+        movieRow.appendChild(card);
+      });
+    }
+
+    searchInput.addEventListener("input", e => renderMovies(e.target.value));
+    renderMovies();
   </script>
 </body>
 </html>
